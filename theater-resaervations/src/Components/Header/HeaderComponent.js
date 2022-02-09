@@ -1,4 +1,5 @@
 import { Box, Flex, Image, Link, Spacer } from "@chakra-ui/react";
+import LogOutComponent from "../LogOut/LogOutComponent";
 
 function HeaderComponent() {
   return (
@@ -13,9 +14,10 @@ function HeaderComponent() {
       </Box>
       <Spacer />
       <Box p="2" display="flex" alignItems="center" justifyContent="center">
-        <Link color="teal.500" href="#">
+        <Link color="teal.500" href="/Login">
           Iniciar sesion
         </Link>
+        <LogOutComponent></LogOutComponent>
       </Box>
     </Flex>
   );
