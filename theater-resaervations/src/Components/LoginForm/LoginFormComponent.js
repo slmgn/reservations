@@ -28,9 +28,7 @@ function LoginFormComponent() {
       .then((response) => response.json())
       .then((data) => {
         if (data.length === 0) {
-          setMessage(
-            "email y/o contraseñas incorrectas,verifica y vuelve intentarlo."
-          );
+          setMessage("Correo y/o contraseñas incorrectas.");
         } else {
           setMessage("");
           localStorage.setItem("usuario", JSON.stringify(data[0]));
@@ -48,41 +46,55 @@ function LoginFormComponent() {
   };
 
   return (
-    <Center mt="10">
-      <Box maxW="sm" borderWidth="1px" borderRadius="lg" bg="white">
+    <Center w="100%" maxW="360px" m={"auto"} mt="10">
+      <Box
+        boxShadow="xl"
+        p={10}
+        w="100%"
+        borderWidth="0"
+        borderRadius="lg"
+        bg="white"
+      >
         <VStack>
-          <FormControl p="6" borderRadius="lg">
-            <FormLabel htmlFor="email">Email address</FormLabel>
+          <FormControl borderRadius="lg">
+            <FormLabel htmlFor="email">Correo electrónico</FormLabel>
             <Input
+              focusBorderColor="orange.400"
               id="email"
               name="email"
               type="email"
               value={credentials.email}
-              placeholder="Enter email"
+              placeholder="Ingrese Correo electrónico"
               onChange={handleChange}
             />
-            <FormLabel htmlFor="password">Password</FormLabel>
+            <FormLabel mt={3} htmlFor="password">
+              Contraseña
+            </FormLabel>
             <Input
+              focusBorderColor="orange.400"
               id="password"
               name="password"
               type="password"
               value={credentials.password}
-              placeholder="Enter password"
+              placeholder="Ingrese Contraseña"
               onChange={handleChange}
             />
           </FormControl>
-          <Text>{message}</Text>
-          <Text>Forgot Password?</Text>
-          <Button colorScheme="orange" onClick={booking}>
-            Log In
-          </Button>
-          <Text>
-            Not Member?
-            <Link color="orange.500" href="#">
-              Sign Up
-            </Link>
-          </Text>
+          <Text color={"red.700"}>{message}</Text>
         </VStack>
+        <Center>
+          <Button
+            _focus={{
+              border: "1px solid orange",
+            }}
+            m={"auto"}
+            mt={5}
+            colorScheme="orange"
+            onClick={booking}
+          >
+            Iniciar Sesión
+          </Button>
+        </Center>
       </Box>
     </Center>
   );

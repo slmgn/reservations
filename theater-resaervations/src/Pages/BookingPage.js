@@ -1,14 +1,14 @@
 import { Text } from "@chakra-ui/react";
 import HeaderComponent from "../Components/Header/HeaderComponent";
-import { useParams } from "react-router-dom";
+import SeatsComponent from "../Components/Seats/SeatsComponent";
+import { palcoA, palcoB } from "../Components/Seats/props";
 
 function BookingPage() {
-  const { email } = useParams();
   return (
     <>
       <HeaderComponent></HeaderComponent>
       <Text>Booking Page</Text>
-      <Text>{email}</Text>
+      <SeatsComponent palcoA={palcoA} palcoB={palcoB}></SeatsComponent>
     </>
   );
 }

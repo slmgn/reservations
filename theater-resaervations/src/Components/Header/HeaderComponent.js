@@ -36,9 +36,11 @@ function HeaderComponent() {
             <LogOutComponent></LogOutComponent>
           </Box>
         ) : (
-          <Link color="teal.500" href="/Login">
-            Iniciar sesion
-          </Link>
+          <Box p={1} borderRadius={6} bg="orange.400">
+            <Link m={2} color="white" href="/Login">
+              Iniciar sesion
+            </Link>
+          </Box>
         )}
       </Box>
     </Flex>
