@@ -1,9 +1,12 @@
 import { Center, Heading, SimpleGrid } from "@chakra-ui/react";
-import { useEffect } from "react";
+import { lazy, useEffect } from "react";
 import { useState } from "react/cjs/react.development";
 import FooterComponent from "../Components/Footer/FooterComponent";
 import HeaderComponent from "../Components/Header/HeaderComponent";
-import InfoCardComponent from "../Components/InfoCard/InfoCardComponent";
+const InfoCardComponent = lazy(() =>
+  import("../Components/InfoCard/InfoCardComponent")
+);
+//import InfoCardComponent from "../Components/InfoCard/InfoCardComponent";
 
 function HomePage() {
   const [showList, setshowList] = useState([]);
@@ -36,6 +39,8 @@ function HomePage() {
                 category={show.category}
                 title={show.title}
                 description={show.description}
+                poster={show.poster}
+                dates={show.dates}
               ></InfoCardComponent>
             );
           })

@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 
 function BookingPage() {
   const { email } = useParams();
-  console.log(email);
   return (
     <>
       <HeaderComponent></HeaderComponent>
