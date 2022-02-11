@@ -1,4 +1,4 @@
-const palcoA = [
+const vip = [
   {
     id: 1,
     isReserved: false,
@@ -50,7 +50,7 @@ const palcoA = [
     name: "A-10",
   },
 ];
-const palcoB = [
+const general = [
   {
     id: 11,
     isReserved: false,
@@ -203,4 +203,4 @@ const palcoB = [
   },
 ];
 
-export { palcoA, palcoB };
+export { vip, general };

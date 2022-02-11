@@ -5,7 +5,8 @@ import ProfileComponent from "../Profile/ProfileComponent";
 
 function HeaderComponent() {
   const [user, setUser] = useState({ name: "", photo: "" });
-  const showInfo = localStorage.length > 0;
+
+  const showInfo = localStorage.getItem("usuario") !== null;
 
   useEffect(() => {
     if (showInfo) {
@@ -16,7 +17,7 @@ function HeaderComponent() {
   }, []);
 
   return (
-    <Flex borderBottom="2px" borderColor="gray.200">
+    <Flex borderBottom="1px" borderColor="orange.500">
       <Box p="2">
         <Image
           src={process.env.PUBLIC_URL + "/juarez-logo.jpg"}
@@ -33,7 +34,6 @@ function HeaderComponent() {
               name={user.name}
               photo={user.photo}
             ></ProfileComponent>
-            <LogOutComponent></LogOutComponent>
           </Box>
         ) : (
           <Box p={1} borderRadius={6} bg="orange.400">

@@ -20,7 +20,7 @@ function App() {
                 <Route path="/*" element={<NotFoundPage />}></Route>
                 <Route index element={<HomePage />}></Route>
                 <Route path="Booking">
-                  <Route path=":email" element={<BookingPage />}></Route>
+                  <Route path=":idShow" element={<BookingPage />}></Route>
                   <Route index element={<BookingPage />}></Route>
                 </Route>
               </Route>

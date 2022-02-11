@@ -6,7 +6,6 @@ import HeaderComponent from "../Components/Header/HeaderComponent";
 const InfoCardComponent = lazy(() =>
   import("../Components/InfoCard/InfoCardComponent")
 );
-//import InfoCardComponent from "../Components/InfoCard/InfoCardComponent";
 
 function HomePage() {
   const [showList, setshowList] = useState([]);
@@ -34,14 +33,7 @@ function HomePage() {
         {showList.length > 0 ? (
           showList.map((show, idx) => {
             return (
-              <InfoCardComponent
-                key={idx}
-                category={show.category}
-                title={show.title}
-                description={show.description}
-                poster={show.poster}
-                dates={show.dates}
-              ></InfoCardComponent>
+              <InfoCardComponent key={idx} show={show}></InfoCardComponent>
             );
           })
         ) : (

@@ -1,75 +1,69 @@
-import { Box, Button, Heading, Image, Text, Badge } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Image,
+  Text,
+  Badge,
+  Heading,
+  Center,
+} from "@chakra-ui/react";
 import { IoTicketOutline } from "react-icons/io5";
-import DateCardComponent from "../DateCard/DateCardComponent";
-import { DateTime } from "luxon";
+import { useNavigate } from "react-router-dom";
 
 function InfoCardComponent(props) {
-  const showInfo = localStorage.length > 0;
+  const navigate = useNavigate();
 
-  const { category, title, description, poster, dates } = props;
-  const { date, time, prices } = dates[0];
-
-  const property = {
-    imageUrl: "https://bit.ly/2Z4KKcF",
-    imageAlt: "Rear view of modern home with pool",
-    beds: 3,
-    baths: 2,
-    title: "Modern home in city center in the heart of historic Los Angeles",
-    formattedPrice: "$1,900.00",
-    reviewCount: 34,
-    rating: 4,
+  const { show } = props;
+  const handleBookin = () => {
+    navigate(`../Booking/${show.id}`);
   };
+
   return (
-    <Box>
-      <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
-        <Image src={process.env.PUBLIC_URL + poster} alt="Poster" />
+    <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
+      <Image src={process.env.PUBLIC_URL + show.poster} alt="Poster" />
 
-        <Box p="6">
-          <Box display="flex" alignItems="baseline">
-            <Badge borderRadius="full" px="2" colorScheme="teal">
-              {category}
-            </Badge>
-            <Box
-              color="gray.500"
-              fontWeight="semibold"
-              letterSpacing="wide"
-              fontSize="xs"
-              textTransform="uppercase"
-              ml="2"
-            >
-              <DateCardComponent
-                date={DateTime.fromFormat(date, "dd/MM/yyyy")}
-                time={time}
-              ></DateCardComponent>
-            </Box>
-          </Box>
-
+      <Box p="6">
+        <Box display="flex" alignItems="baseline">
+          <Badge borderRadius="full" px="2" colorScheme="teal">
+            {show.category}
+          </Badge>
           <Box
-            mt="1"
+            color="gray.500"
             fontWeight="semibold"
-            as="h4"
-            lineHeight="tight"
-            isTruncated
+            letterSpacing="wide"
+            fontSize="xs"
+            textTransform="uppercase"
+            ml="5"
           >
-            {title}
+            <Text>{show.date}</Text>
+            <Text>{show.hour}</Text>
           </Box>
+        </Box>
 
-          <Text>
-            Desde {prices.general} COP a {prices.vip} COP
-          </Text>
+        <Box mt="1" fontWeight="bold" as="h3" lineHeight="tight" isTruncated>
+          {show.title}
+        </Box>
+        <Text>{show.description}</Text>
 
-          <Box display="flex" mt="2" alignItems="center">
-            <Box as="span" ml="2" color="gray.600" fontSize="sm">
-              {property.reviewCount} reviews
-            </Box>
+        <Box display="flex" mt="2" alignItems="center">
+          <Box as="span" ml="2" color="gray.600" fontSize="sm">
+            Desde {show.prices.general} COP a {show.prices.vip} COP
           </Box>
         </Box>
       </Box>
-      {showInfo ? (
-        <Button rightIcon={<IoTicketOutline />}>RESERVA YA</Button>
-      ) : (
-        <></>
-      )}
+      <Center>
+        <Button
+          _focus={{
+            border: "1px solid orange",
+          }}
+          m={2}
+          colorScheme="orange"
+          rightIcon={<IoTicketOutline />}
+          onClick={handleBookin}
+        >
+          Reservar
+        </Button>
+      </Center>
     </Box>
   );
 }

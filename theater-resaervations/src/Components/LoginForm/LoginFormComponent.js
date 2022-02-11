@@ -32,7 +32,7 @@ function LoginFormComponent() {
         } else {
           setMessage("");
           localStorage.setItem("usuario", JSON.stringify(data[0]));
-          navigate(`../Booking/${credentials.email}`);
+          navigate("/");
         }
       })
       .catch((error) => console.log("Se produjo un error"));
@@ -88,7 +88,6 @@ function LoginFormComponent() {
               border: "1px solid orange",
             }}
             m={"auto"}
-            mt={5}
             colorScheme="orange"
             onClick={booking}
           >

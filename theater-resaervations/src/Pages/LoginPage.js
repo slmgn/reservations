@@ -1,5 +1,7 @@
-import { Box, Image, Heading, Wrap } from "@chakra-ui/react";
+import { Box, Image, Heading, Wrap, Icon, Center } from "@chakra-ui/react";
 import LoginFormComponent from "../Components/LoginForm/LoginFormComponent";
+import { GoHome } from "react-icons/go";
+import { Link } from "react-router-dom";
 
 function LoginPage() {
   return (
@@ -18,8 +20,13 @@ function LoginPage() {
           />
         </Box>
       </Wrap>
-
       <LoginFormComponent></LoginFormComponent>
+      <Center m={4}>
+        <Link to="/" color="orange.900">
+          <Icon as={GoHome} />
+          Ir al inicio
+        </Link>
+      </Center>
     </Box>
   );
 }
