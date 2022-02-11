@@ -41,7 +41,9 @@ function SeatsComponent(props) {
     const bookedList = JSON.parse(localStorage.getItem("Booked")) || [
       { isShow: "", seats: [] },
     ];
+
     const aux = bookedList.filter((item) => item.idShow === data.id);
+
     if (aux !== undefined && aux.length > 0) {
       vip.filter((item) => (item.isReserved = aux[0].seats.includes(item.id)));
       general.filter(
@@ -91,45 +93,23 @@ function SeatsComponent(props) {
 
   const reserv = () => {
     const show = JSON.parse(localStorage.getItem("Booked")) || [];
+
     if (show.length > 0) {
       const aux = JSON.parse(localStorage.getItem("Booked")).filter(
         (i) => i.idShow === data.id
       );
       if (aux.length > 0) {
         aux[0].seats = seats.concat(aux[0].seats);
-        console.log("hola", aux);
+        localStorage.setItem("Booked", JSON.stringify(aux));
       } else {
         const x = { idShow: data.id, seats: seats };
-        console.log("adios", x);
+        show.push(x);
+        localStorage.setItem("Booked", JSON.stringify(show));
       }
     } else {
-      localStorage.setItem("Booked", JSON.stringify(show));
+      const obj = [{ idShow: data.id, seats: seats }];
+      localStorage.setItem("Booked", JSON.stringify(obj));
     }
-    /*if (list.length > 0) {
-      const aux = JSON.parse(localStorage.getItem("Booked")).filter(
-        (i) => i.showId !== data.id
-      );
-
-      if (aux !== undefined && aux > 0) {
-        
-      
-      } else {      } 
-        console.log(aux);
-       if (aux !== undefined && aux > 0) {
-        const data = seats.concat(aux.seats);
-         localStorage.setItem(
-        "Booked",
-        JSON.stringify([{ idShow: data.id, seats: seats }])
-      }
-      
-     
-      );
-    } else {
-      localStorage.setItem(
-        "Booked",
-        JSON.stringify([{ idShow: data.id, seats: seats }])
-      );
-    }*/
   };
 
   const getDetail = () => {
@@ -205,7 +185,7 @@ function SeatsComponent(props) {
                         className={`seats ${
                           active.includes(s.id) ? "active" : "inactive"
                         }`}
-                        onClick={(e) => handleActive(e, s)}
+                        onClick={(e) => handleActive(e)}
                       >
                         {s.id}
                       </Button>

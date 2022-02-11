@@ -16,6 +16,7 @@ function BookingPage() {
     hour: "",
     priceList: { vip: "", general: "" },
   });
+
   const { idShow } = useParams();
 
   const getShowInfo = () => {
@@ -34,8 +35,11 @@ function BookingPage() {
   return (
     <>
       <HeaderComponent></HeaderComponent>
+
       <ContentInfoComponent show={show}></ContentInfoComponent>
+
       <SeatsComponent data={show}></SeatsComponent>
+
       <FooterComponent></FooterComponent>
     </>
   );
