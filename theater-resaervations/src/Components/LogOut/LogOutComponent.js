@@ -6,7 +6,7 @@ function LogOutComponent() {
   const navigate = useNavigate();
   const navigateTo = () => {
     localStorage.removeItem("usuario");
-    navigate("../Login");
+    navigate("../../Login");
   };
   return (
     <Tooltip label="Cerrar Sesión" aria-label="A tooltip">

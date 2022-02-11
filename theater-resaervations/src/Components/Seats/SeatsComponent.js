@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import "./SeatsComponent.css";
 import BookingDescriptionComponent from "../Booking/BookingDescriptionComponent";
+import ModalReservComponent from "../ModalReserv/ModalReservComponent";
 
 import { IoTicketOutline } from "react-icons/io5";
 import { CgUnavailable } from "react-icons/cg";
@@ -25,6 +26,7 @@ function SeatsComponent(props) {
   const [detail, setDetail] = useState([]);
   const { data } = props;
   const [active, setActive] = useState([]);
+  const [isOpenModalReserv, setIsOpenModalReserv] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -61,22 +63,73 @@ function SeatsComponent(props) {
   };
 
   const booking = () => {
+    setIsOpenModalReserv(true);
     const user = JSON.parse(localStorage.getItem("usuario")).id;
     const arr = JSON.parse(localStorage.getItem("UserBooking")) || [];
+
     if (arr.length > 0) {
       const aux = JSON.parse(localStorage.getItem("UserBooking")).filter(
-        (i) => i.showId !== data.id && i.user !== user
+        (i) => i.idShow === data.id && i.user === user
       );
-      aux.push({ idShow: data.id, user: user, seats: seats });
-      localStorage.setItem("UserBooking", JSON.stringify(aux));
+      if (aux.length > 0) {
+        const arr = JSON.parse(localStorage.getItem("UserBooking")).filter(
+          (i) => i.user !== user
+        );
+        aux[0].seats = seats;
+        arr.push(aux[0]);
+        localStorage.setItem("UserBooking", JSON.stringify(arr));
+      } else {
+        arr.push({ idShow: data.id, user: user, seats: seats });
+        localStorage.setItem("UserBooking", JSON.stringify(arr));
+      }
     } else {
-      arr.push({ showId: 1, user: user, seats: seats });
+      arr.push({ idShow: data.id, user: user, seats: seats });
       localStorage.setItem("UserBooking", JSON.stringify(arr));
     }
-    localStorage.setItem(
-      "Booked",
-      JSON.stringify([{ idShow: data.id, seats: seats }])
-    );
+    reserv();
+  };
+
+  const reserv = () => {
+    const show = JSON.parse(localStorage.getItem("Booked")) || [];
+    if (show.length > 0) {
+      const aux = JSON.parse(localStorage.getItem("Booked")).filter(
+        (i) => i.idShow === data.id
+      );
+      if (aux.length > 0) {
+        aux[0].seats = seats.concat(aux[0].seats);
+        console.log("hola", aux);
+      } else {
+        const x = { idShow: data.id, seats: seats };
+        console.log("adios", x);
+      }
+    } else {
+      localStorage.setItem("Booked", JSON.stringify(show));
+    }
+    /*if (list.length > 0) {
+      const aux = JSON.parse(localStorage.getItem("Booked")).filter(
+        (i) => i.showId !== data.id
+      );
+
+      if (aux !== undefined && aux > 0) {
+        
+      
+      } else {      } 
+        console.log(aux);
+       if (aux !== undefined && aux > 0) {
+        const data = seats.concat(aux.seats);
+         localStorage.setItem(
+        "Booked",
+        JSON.stringify([{ idShow: data.id, seats: seats }])
+      }
+      
+     
+      );
+    } else {
+      localStorage.setItem(
+        "Booked",
+        JSON.stringify([{ idShow: data.id, seats: seats }])
+      );
+    }*/
   };
 
   const getDetail = () => {
@@ -204,6 +257,13 @@ function SeatsComponent(props) {
           ></BookingDescriptionComponent>
         </Stack>
       </Center>
+      <ModalReservComponent
+        titulo="Reserva"
+        descripcion="Felicidades sus asientos han sido asignados"
+        isOpen={isOpenModalReserv}
+        footerButtonText="Ir al home"
+        onClose={() => navigate("../../")}
+      ></ModalReservComponent>
     </Box>
   );
 }

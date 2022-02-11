@@ -18,10 +18,11 @@ import {
 } from "react-icons/bs";
 
 import { FiMail } from "react-icons/fi";
-
+import "./style.css";
 function FooterComponent() {
   return (
     <Box
+      className="footer"
       color="white"
       borderTop="2px"
       borderColor="orange.500"

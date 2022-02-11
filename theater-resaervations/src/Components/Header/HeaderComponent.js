@@ -2,6 +2,7 @@ import { Box, Flex, Image, Link, Spacer } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import LogOutComponent from "../LogOut/LogOutComponent";
 import ProfileComponent from "../Profile/ProfileComponent";
+import { Link as LinkRouter } from "react-router-dom";
 
 function HeaderComponent() {
   const [user, setUser] = useState({ name: "", photo: "" });
@@ -19,12 +20,14 @@ function HeaderComponent() {
   return (
     <Flex borderBottom="1px" borderColor="orange.500">
       <Box p="2">
-        <Image
-          src={process.env.PUBLIC_URL + "/juarez-logo.jpg"}
-          alt="Teatro Juarez"
-          objectFit="cover"
-          boxSize="100px"
-        />
+        <LinkRouter to="/">
+          <Image
+            src={process.env.PUBLIC_URL + "/juarez-logo.jpg"}
+            alt="Teatro Juarez"
+            objectFit="cover"
+            boxSize="100px"
+          />
+        </LinkRouter>
       </Box>
       <Spacer />
       <Box p="2" display="flex" alignItems="center" justifyContent="center">

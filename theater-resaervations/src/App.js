@@ -7,10 +7,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import BookingPage from "./Pages/BookingPage";
 import { Suspense } from "react";
 import { Box, Container } from "@chakra-ui/react";
+import "./App.css";
 
 function App() {
   return (
-    <Container maxW="100%">
+    <Container className="container-app" maxW="100%">
       <Box>
         <Router>
           <Suspense fallback={<LoadingComponent />}>

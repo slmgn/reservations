@@ -4,6 +4,7 @@ import SeatsComponent from "../Components/Seats/SeatsComponent";
 import ContentInfoComponent from "../Components/ContentInfo/ContentInfoComponent";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import FooterComponent from "../Components/Footer/FooterComponent";
 
 function BookingPage() {
   const [show, setShow] = useState({
@@ -35,6 +36,7 @@ function BookingPage() {
       <HeaderComponent></HeaderComponent>
       <ContentInfoComponent show={show}></ContentInfoComponent>
       <SeatsComponent data={show}></SeatsComponent>
+      <FooterComponent></FooterComponent>
     </>
   );
 }
