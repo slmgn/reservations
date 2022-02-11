@@ -1,6 +1,6 @@
 import HeaderComponent from "../Components/Header/HeaderComponent";
 import SeatsComponent from "../Components/Seats/SeatsComponent";
-import { vip, general } from "../Components/Seats/props";
+
 import ContentInfoComponent from "../Components/ContentInfo/ContentInfoComponent";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -25,7 +25,6 @@ function BookingPage() {
       })
       .catch((error) => console.log(error));
   };
-  const getSeats = () => {};
 
   useEffect(() => {
     getShowInfo();
@@ -35,7 +34,7 @@ function BookingPage() {
     <>
       <HeaderComponent></HeaderComponent>
       <ContentInfoComponent show={show}></ContentInfoComponent>
-      <SeatsComponent data={show} vip={vip} general={general}></SeatsComponent>
+      <SeatsComponent data={show}></SeatsComponent>
     </>
   );
 }

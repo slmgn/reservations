@@ -1,19 +1,11 @@
-import {
-  Box,
-  Button,
-  Image,
-  Text,
-  Badge,
-  Heading,
-  Center,
-} from "@chakra-ui/react";
+import { Box, Button, Image, Text, Badge, Center } from "@chakra-ui/react";
 import { IoTicketOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
 function InfoCardComponent(props) {
+  const { show } = props;
   const navigate = useNavigate();
 
-  const { show } = props;
   const handleBookin = () => {
     navigate(`../Booking/${show.id}`);
   };

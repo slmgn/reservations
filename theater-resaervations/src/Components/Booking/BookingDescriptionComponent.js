@@ -1,15 +1,4 @@
-import {
-  Button,
-  Box,
-  Center,
-  Td,
-  Tbody,
-  Tr,
-  Th,
-  Tfoot,
-  Table,
-  Thead,
-} from "@chakra-ui/react";
+import { Box, Td, Tbody, Tr, Th, Tfoot, Table, Thead } from "@chakra-ui/react";
 
 function BookingDescriptionComponent(props) {
   const { detail } = props;

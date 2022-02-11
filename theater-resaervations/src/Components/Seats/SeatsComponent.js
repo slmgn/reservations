@@ -11,8 +11,6 @@ import {
   Square,
   HStack,
   Icon,
-  AlertIcon,
-  Alert,
 } from "@chakra-ui/react";
 import "./SeatsComponent.css";
 import BookingDescriptionComponent from "../Booking/BookingDescriptionComponent";
@@ -20,15 +18,37 @@ import BookingDescriptionComponent from "../Booking/BookingDescriptionComponent"
 import { IoTicketOutline } from "react-icons/io5";
 import { CgUnavailable } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
+import { vip, general } from "./props";
 
 function SeatsComponent(props) {
   const [seats, setSeats] = useState([]);
   const [detail, setDetail] = useState([]);
-  const { data, vip, general } = props;
+  const { data } = props;
   const [active, setActive] = useState([]);
   const navigate = useNavigate();
 
-  const handleActive = (e, p) => {
+  useEffect(() => {
+    setDetail(getDetail());
+  }, [seats]);
+
+  useEffect(() => {
+    isReserved();
+  });
+
+  const isReserved = () => {
+    const bookedList = JSON.parse(localStorage.getItem("Booked")) || [
+      { isShow: "", seats: [] },
+    ];
+    const aux = bookedList.filter((item) => item.idShow === data.id);
+    if (aux !== undefined && aux.length > 0) {
+      vip.filter((item) => (item.isReserved = aux[0].seats.includes(item.id)));
+      general.filter(
+        (item) => (item.isReserved = aux[0].seats.includes(item.id))
+      );
+    }
+  };
+
+  const handleActive = (e) => {
     const buttonId = parseInt(e.target.id);
 
     if (active.includes(buttonId)) {
@@ -39,9 +59,25 @@ function SeatsComponent(props) {
       setSeats((seats) => [...seats, buttonId]);
     }
   };
-  useEffect(() => {
-    setDetail(getDetail());
-  }, [seats]);
+
+  const booking = () => {
+    const user = JSON.parse(localStorage.getItem("usuario")).id;
+    const arr = JSON.parse(localStorage.getItem("UserBooking")) || [];
+    if (arr.length > 0) {
+      const aux = JSON.parse(localStorage.getItem("UserBooking")).filter(
+        (i) => i.showId !== data.id && i.user !== user
+      );
+      aux.push({ idShow: data.id, user: user, seats: seats });
+      localStorage.setItem("UserBooking", JSON.stringify(aux));
+    } else {
+      arr.push({ showId: 1, user: user, seats: seats });
+      localStorage.setItem("UserBooking", JSON.stringify(arr));
+    }
+    localStorage.setItem(
+      "Booked",
+      JSON.stringify([{ idShow: data.id, seats: seats }])
+    );
+  };
 
   const getDetail = () => {
     if (seats.length > 0) {
@@ -64,112 +100,111 @@ function SeatsComponent(props) {
     }
   };
 
-  const navigateTo = () => {
-    navigate("../../");
-  };
   return (
-    <Center>
-      <Stack direction="row" p={4}>
-        <Box>
-          <HStack>
-            <Square size="10px" bg="green" />
-            <Text fontWeight="semibold">Seleccionada</Text>
-          </HStack>
-          <HStack>
-            <Square size="10px" bg="#761818" />
-            <Text fontWeight="semibold">Disponible</Text>
-          </HStack>
-          <HStack>
-            <Icon as={CgUnavailable} />
-            <Text fontWeight="semibold">No disponible</Text>
-          </HStack>
-        </Box>
-        <Box>
-          <Box
-            bg="#dbdbdb"
-            borderRadius={"54px 54px 2px 2px"}
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            mx={"auto"}
-            maxW="200px"
-            h={"50"}
-            className="scenario"
-          >
-            <Text fontWeight="bold">Escenario</Text>
+    <Box>
+      <Center>
+        <Stack direction="row" p={4}>
+          <Box>
+            <HStack>
+              <Square size="10px" bg="green" />
+              <Text fontWeight="semibold">Seleccionada</Text>
+            </HStack>
+            <HStack>
+              <Square size="10px" bg="#761818" />
+              <Text fontWeight="semibold">Disponible</Text>
+            </HStack>
+            <HStack>
+              <Icon as={CgUnavailable} />
+              <Text fontWeight="semibold">No disponible</Text>
+            </HStack>
           </Box>
-          <Center height="20px">
-            <Divider orientation="vertical" />
-          </Center>
-
-          <Wrap>
-            <Flex w="100%" justify={"center"} bgColor="red.100" p={2}>
-              <Box maxW={"120px"}>
-                <Text textAlign={"center"} fontWeight="bold">
-                  V.I.P
-                </Text>
-                <Wrap spacing="5px">
-                  {vip.map((s, idx) => (
-                    <Button
-                      key={idx}
-                      id={s.id}
-                      colorScheme="blue"
-                      isDisabled={s.isReserved}
-                      className={`seats ${
-                        active.includes(s.id) ? "active" : "inactive"
-                      }`}
-                      onClick={(e) => handleActive(e, s)}
-                    >
-                      {s.id}
-                    </Button>
-                  ))}
-                </Wrap>
-              </Box>
-            </Flex>
-            <Flex w="100%" justify={"center"} bgColor="gray.100" p={2}>
-              <Box maxW={"250px"}>
-                <Text textAlign={"center"} fontWeight="bold">
-                  GENERAL
-                </Text>
-                <Wrap spacing="5px">
-                  {general.map((s, idx) => (
-                    <Button
-                      key={idx}
-                      id={s.id}
-                      colorScheme="blue"
-                      isDisabled={s.isReserved}
-                      className={`seats ${
-                        active.includes(s.id) ? "active" : "inactive"
-                      }`}
-                      onClick={(e) => handleActive(e)}
-                    >
-                      {s.id}
-                    </Button>
-                  ))}
-                </Wrap>
-              </Box>
-            </Flex>
-          </Wrap>
-          <Center>
-            <Button
-              _focus={{
-                border: "1px solid orange",
-              }}
-              m={2}
-              colorScheme="orange"
-              rightIcon={<IoTicketOutline />}
-              onClick={navigateTo}
-              disabled={seats.length === 0}
+          <Box>
+            <Box
+              bg="#dbdbdb"
+              borderRadius={"54px 54px 2px 2px"}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              mx={"auto"}
+              maxW="200px"
+              h={"50"}
+              className="scenario"
             >
-              Reservar
-            </Button>
-          </Center>
-        </Box>
-        <BookingDescriptionComponent
-          detail={detail}
-        ></BookingDescriptionComponent>
-      </Stack>
-    </Center>
+              <Text fontWeight="bold">Escenario</Text>
+            </Box>
+            <Center height="20px">
+              <Divider orientation="vertical" />
+            </Center>
+
+            <Wrap>
+              <Flex w="100%" justify={"center"} bgColor="red.100" p={2}>
+                <Box maxW={"120px"}>
+                  <Text textAlign={"center"} fontWeight="bold">
+                    V.I.P
+                  </Text>
+                  <Wrap spacing="5px">
+                    {vip.map((s, idx) => (
+                      <Button
+                        key={idx}
+                        id={s.id}
+                        colorScheme="blue"
+                        isDisabled={s.isReserved}
+                        className={`seats ${
+                          active.includes(s.id) ? "active" : "inactive"
+                        }`}
+                        onClick={(e) => handleActive(e, s)}
+                      >
+                        {s.id}
+                      </Button>
+                    ))}
+                  </Wrap>
+                </Box>
+              </Flex>
+              <Flex w="100%" justify={"center"} bgColor="gray.100" p={2}>
+                <Box maxW={"250px"}>
+                  <Text textAlign={"center"} fontWeight="bold">
+                    GENERAL
+                  </Text>
+                  <Wrap spacing="5px">
+                    {general.map((s, idx) => (
+                      <Button
+                        key={idx}
+                        id={s.id}
+                        colorScheme="blue"
+                        isDisabled={s.isReserved}
+                        className={`seats ${
+                          active.includes(s.id) ? "active" : "inactive"
+                        }`}
+                        onClick={(e) => handleActive(e)}
+                      >
+                        {s.id}
+                      </Button>
+                    ))}
+                  </Wrap>
+                </Box>
+              </Flex>
+            </Wrap>
+            <Center>
+              <Button
+                _focus={{
+                  border: "1px solid orange",
+                }}
+                m={2}
+                colorScheme="orange"
+                rightIcon={<IoTicketOutline />}
+                onClick={() => booking()}
+                disabled={seats.length === 0}
+              >
+                Reservar
+              </Button>
+            </Center>
+          </Box>
+          <BookingDescriptionComponent
+            detail={detail}
+          ></BookingDescriptionComponent>
+        </Stack>
+      </Center>
+    </Box>
   );
 }
 

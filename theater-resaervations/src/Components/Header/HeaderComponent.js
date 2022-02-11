@@ -36,7 +36,7 @@ function HeaderComponent() {
             ></ProfileComponent>
           </Box>
         ) : (
-          <Box p={1} borderRadius={6} bg="orange.400">
+          <Box p={1} borderRadius={6} bg="orange.500">
             <Link m={2} color="white" href="/Login">
               Iniciar sesion
             </Link>
