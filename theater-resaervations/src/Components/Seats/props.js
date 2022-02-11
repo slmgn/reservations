@@ -16,7 +16,7 @@ const vip = [
   },
   {
     id: 4,
-    isReserved: false,
+    isReserved: true,
     name: "A-04",
   },
   {
@@ -45,7 +45,7 @@ const vip = [
     name: "A-09",
   },
   {
-    id: 5,
+    id: 10,
     isReserved: false,
     name: "A-10",
   },

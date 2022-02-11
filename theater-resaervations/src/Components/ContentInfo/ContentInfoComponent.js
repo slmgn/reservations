@@ -14,7 +14,6 @@ import { BsFillCalendarWeekFill, BsFillClockFill } from "react-icons/bs";
 
 function ContentInfoComponent(props) {
   const { show } = props;
-  console.log("a");
   return (
     <Center bg="gray.50">
       <Box>

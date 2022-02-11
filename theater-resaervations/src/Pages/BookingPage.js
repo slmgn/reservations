@@ -25,6 +25,7 @@ function BookingPage() {
       })
       .catch((error) => console.log(error));
   };
+  const getSeats = () => {};
 
   useEffect(() => {
     getShowInfo();

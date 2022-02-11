@@ -11,14 +11,10 @@ import {
   Thead,
 } from "@chakra-ui/react";
 
-import { IoTicketOutline } from "react-icons/io5";
 function BookingDescriptionComponent(props) {
-  const x = 2;
-  const y = "V.I.P";
-  const z = 100;
-
+  const { detail } = props;
   return (
-    <Box bg="gray.400" maxW={500} color="white">
+    <Box maxW={500}>
       <Table variant="simple">
         <Thead>
           <Tr>
@@ -28,36 +24,37 @@ function BookingDescriptionComponent(props) {
           </Tr>
         </Thead>
         <Tbody>
-          <Tr>
-            <Td>{x}</Td>
-            <Td>{y}</Td>
-            <Td isNumeric>{z}</Td>
-          </Tr>
+          {detail ? (
+            detail.map((item, idx) => {
+              return (
+                <Tr key={idx}>
+                  <Td>{item.cantidad}</Td>
+                  <Td>{item.descripcion}</Td>
+                  <Td isNumeric>{item.precio}</Td>
+                </Tr>
+              );
+            })
+          ) : (
+            <></>
+          )}
         </Tbody>
         <Tfoot>
           <Tr>
             <Th></Th>
             <Th>Total</Th>
-            <Th isNumeric>100</Th>
+            <Th isNumeric>
+              {detail
+                ? detail
+                    .map((item) => item.precio)
+                    .reduce((prev, curr) => prev + curr, 0)
+                : 0}{" "}
+              COP
+            </Th>
           </Tr>
         </Tfoot>
       </Table>
-      <Center>
-        <Button
-          _focus={{
-            border: "1px solid orange",
-          }}
-          m={2}
-          colorScheme="orange"
-          rightIcon={<IoTicketOutline />}
-        >
-          Reservar
-        </Button>
-      </Center>
     </Box>
   );
 }
-
-//CREO QUE UNA GRID SERIA LO MEJOR
 
 export default BookingDescriptionComponent;
