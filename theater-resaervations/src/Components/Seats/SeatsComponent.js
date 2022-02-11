@@ -49,6 +49,9 @@ function SeatsComponent(props) {
       general.filter(
         (item) => (item.isReserved = aux[0].seats.includes(item.id))
       );
+    } else {
+      vip.filter((item) => (item.isReserved = false));
+      general.filter((item) => (item.isReserved = false));
     }
   };
 
