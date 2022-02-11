@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 function InfoCardComponent(props) {
   const { show } = props;
   const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("usuario")) || null;
 
   const handleBookin = () => {
     navigate(`../Booking/${show.id}`);
@@ -44,17 +45,19 @@ function InfoCardComponent(props) {
         </Box>
       </Box>
       <Center>
-        <Button
-          _focus={{
-            border: "1px solid orange",
-          }}
-          m={2}
-          colorScheme="orange"
-          rightIcon={<IoTicketOutline />}
-          onClick={handleBookin}
-        >
-          Reservar
-        </Button>
+        {user !== null && (
+          <Button
+            _focus={{
+              border: "1px solid orange",
+            }}
+            m={2}
+            colorScheme="orange"
+            rightIcon={<IoTicketOutline />}
+            onClick={handleBookin}
+          >
+            Reservar
+          </Button>
+        )}
       </Center>
     </Box>
   );
